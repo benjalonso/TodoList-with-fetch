@@ -1,12 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Amatic+SC&family=Caveat:wght@500&family=Indie+Flower&family=Montserrat&family=Nanum+Myeongjo&family=Sriracha&display=swap');
 
-/* 
+body {
+    font-family: 'Amatic SC', cursive;
+    background-image: url("https://cdn.pixabay.com/photo/2012/12/24/08/39/backdrop-72250_960_720.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+}
 
-*/
+.titlePaper {
+    width: 25rem;
+    height: 7rem;
+    box-shadow: 2px 2px 5px rgb(46, 45, 45);
+
+}
+
+.title {
+    font-size: 5rem;
+    margin-top: 50px;
+    text-align: center;
+    
+}
+.cajaTodo {
+    
+    margin-top: 50px;
+    width: 30rem;
+    height: 20rem;
+    background-image: url("https://cdn.pixabay.com/photo/2016/12/28/01/44/leaf-notebook-1935230_960_720.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 2px 2px 5px rgb(46, 45, 45);
+
+
+}
+.todoInput{
+    margin: 10px auto;
+    text-align: center;
+    width: 350px;
+    font-size: 2rem;
+    background-color: rgba(250, 235, 215, 0) ;
+    border: 0;
+}
+.list{
+    display: flex;
+    justify-content: space-between;
+font-size: 2rem;
+}
+.hideDelete {
+display: none;
+}
+.showDelete {
+    background-color: rgba(250, 235, 215, 0) ;
+    border: 0;
+display: block;
+}
