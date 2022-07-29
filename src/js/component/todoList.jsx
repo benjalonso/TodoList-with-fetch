@@ -33,14 +33,14 @@ const Todo = () => {
 	  }, []);
 	
 	const getFetch = async (url) => {
-		await fetch(url)
-		  .then( (response) => {
+		 await fetch(url)
+		  .then( response => {
 			  console.log(response.ok); // Será true (verdad) si la respuesta es exitosa.
 			  console.log(response.status); // el código de estado = 200 o código = 400 etc.
 			  console.log(response.text()); // Intentará devolver el resultado exacto como cadena (string)
-			  return await response.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
+			  return  response.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
 		  })
-		  .then(async (data) => {
+		  .then( (data) => {
 			  console.log(JSON.stringify(data)); //esto imprimirá en la consola el objeto exacto recibido del servidor
 			  setTodo(data.label)
 			  console.log(todo)
