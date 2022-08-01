@@ -3,7 +3,10 @@ import swal from "sweetalert";
 // import fetchTodo from "/workspace/react-hello/src/js/component/fetchTodo.jsx"
 
 const Todo = () => {
+  const API_URL = "http://assets.breatheco.de/apis/fake/todos/user";
   const [inputValue, setInputValue] = useState("");
+  const [inputUserValue, setInputUserValue] = useState("");
+  const [user, setUser] = useState("")
   const [todo, setTodo] = useState([{label: ""}]);
   const [deleteButton, setDeleteButton] = useState("hideDelete");
 
@@ -25,17 +28,29 @@ const Todo = () => {
     }
   };
   const deleteTodo = (index) => {
-
     todo.splice(index, 1);
     setTodo([...todo]);
   };
-  useEffect(() => {
-   const json = getFetch("https://assets.breatheco.de/apis/fake/todos/user/benja");
-   console.log(json)
-  }, []);
 
-  const getFetch = (url) => {
-    fetch(url)
+  const createUser = (e) => {
+    if (inputUserValue !== "" && e.keyCode === 13) {
+      setUser(inputUserValue);
+      setInputUserValue("");
+      postFetch(`${API_URL}${user}`)
+      swal("User created", "Lets do it!", "success");
+    } else if (inputUserValue === "" && e.keyCode === 13) {
+      swal("Heeeey!", "PUT YOU NAME!");
+    }
+  }
+
+  const postFetch = (url) => {
+    fetch(url,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: []
+    })
       .then((response) => {
         return response.json(); 
       })
@@ -56,6 +71,13 @@ const Todo = () => {
         <h1 className="title">Todo's List</h1>
       </div>
       <div className="container cajaTodo">
+        <input 
+         placeholder="Put your name"
+         type="text"
+         onChange={(e) => setInputUserValue(e.target.value)}
+        onKeyUp={createUser}
+          value={inputUserValue}>
+        </input>
         <input
           className="todoInput"
           placeholder="What has to be done today?"
