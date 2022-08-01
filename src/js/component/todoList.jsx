@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import swal from "sweetalert";
-// import fetchTodo from "/workspace/react-hello/src/js/component/fetchTodo.jsx"
 
 const Todo = () => {
-  const API_URL = "http://assets.breatheco.de/apis/fake/todos/user";
-  const [inputValue, setInputValue] = useState("");
+  const API_URL = "http://assets.breatheco.de/apis/fake/todos/user/";
   const [inputUserValue, setInputUserValue] = useState("");
-  const [user, setUser] = useState("")
-  const [todo, setTodo] = useState([{label: ""}]);
+  const [user, setUser] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [todo, setTodo] = useState([{ label: "" }]);
   const [deleteButton, setDeleteButton] = useState("hideDelete");
+
 
   const hideXButton = () => {
     setTimeout(() => {
@@ -35,24 +35,26 @@ const Todo = () => {
   const createUser = (e) => {
     if (inputUserValue !== "" && e.keyCode === 13) {
       setUser(inputUserValue);
+      // const fullURL = API_URL+user;
+      console.log(user)
+      // postFetch(fullURL);
       setInputUserValue("");
-      postFetch(`${API_URL}${user}`)
       swal("User created", "Lets do it!", "success");
     } else if (inputUserValue === "" && e.keyCode === 13) {
       swal("Heeeey!", "PUT YOU NAME!");
     }
-  }
+  };
 
   const postFetch = (url) => {
-    fetch(url,{
-      method: 'POST',
+    fetch(url, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: []
+      body: JSON.stringify([])
     })
       .then((response) => {
-        return response.json(); 
+        return response.json();
       })
       .then((data) => {
         console.log(data);
@@ -71,13 +73,13 @@ const Todo = () => {
         <h1 className="title">Todo's List</h1>
       </div>
       <div className="container cajaTodo">
-        <input 
-         placeholder="Put your name"
-         type="text"
-         onChange={(e) => setInputUserValue(e.target.value)}
-        onKeyUp={createUser}
-          value={inputUserValue}>
-        </input>
+        <input
+          placeholder="Put your name"
+          type="text"
+          onChange={(e) => setInputUserValue(e.target.value)}
+          onKeyUp={createUser}
+          value={inputUserValue}
+        ></input>
         <input
           className="todoInput"
           placeholder="What has to be done today?"
