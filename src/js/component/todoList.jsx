@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import swal from "sweetalert";
 
 const Todo = () => {
-  const API_URL = "http://assets.breatheco.de/apis/fake/todos/user/";
+  const API_URL = "https://assets.breatheco.de/apis/fake/todos/user/";
   const [inputUserValue, setInputUserValue] = useState("");
-  const [user, setUser] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [user, setUser] = useState("");
   const [todo, setTodo] = useState([{ label: "" }]);
   const [deleteButton, setDeleteButton] = useState("hideDelete");
-
 
   const hideXButton = () => {
     setTimeout(() => {
@@ -21,6 +20,8 @@ const Todo = () => {
   const validateInput = (e) => {
     if (inputValue !== "" && e.keyCode === 13) {
       setTodo([...todo, inputValue]);
+      console.log(todo)
+      updateFetch(API_URL+user, todo)
       setInputValue("");
       swal("You can do it!", "Task has been added", "success");
     } else if (inputValue === "" && e.keyCode === 13) {
@@ -35,9 +36,9 @@ const Todo = () => {
   const createUser = (e) => {
     if (inputUserValue !== "" && e.keyCode === 13) {
       setUser(inputUserValue);
-      // const fullURL = API_URL+user;
-      console.log(user)
-      // postFetch(fullURL);
+      const fullURL = API_URL+inputUserValue;
+      console.log(fullURL)
+      createUserFetch(fullURL);
       setInputUserValue("");
       swal("User created", "Lets do it!", "success");
     } else if (inputUserValue === "" && e.keyCode === 13) {
@@ -45,7 +46,7 @@ const Todo = () => {
     }
   };
 
-  const postFetch = (url) => {
+  const createUserFetch = (url) => {
     fetch(url, {
       method: "POST",
       headers: {
@@ -58,15 +59,33 @@ const Todo = () => {
       })
       .then((data) => {
         console.log(data);
-        // setTodo(data);
-        // console.log(todo);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const updateFetch = (url, todo) => {
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([
+        {label: todo , done: false}
+      ])
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
       })
       .catch((error) => {
         //manejo de errores
         console.log(error);
       });
   };
-
   return (
     <div>
       <div className=" titlePaper container  bg-warning">
@@ -91,9 +110,11 @@ const Todo = () => {
 
         <ul className="todoList">
           {todo.map((value, index) => {
+            console.log(value)
             return (
               <li onMouseOver={hideXButton} className="list" key={index}>
-                {value.label}
+                {[value.label]}
+                
                 <button
                   onClick={() => {
                     deleteTodo(index);
