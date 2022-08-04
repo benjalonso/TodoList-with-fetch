@@ -20,10 +20,11 @@ body {
     font-size: 5rem;
     margin-top: 50px;
     text-align: center;
-    
+
 }
+
 .cajaTodo {
-    
+
     margin-top: 50px;
     width: 30rem;
     height: 20rem;
@@ -34,41 +35,53 @@ body {
 
 
 }
-.userInput{
+
+.userInput {
     margin-left: 10px;
     text-align: center;
     width: 130px;
     font-size: 1.5rem;
-    background-color: rgba(250, 235, 215, 0) ;
+    background-color: rgba(250, 235, 215, 0);
     border: 0;
 }
-.todoInput{
+
+.todoInput {
     margin: 10px auto;
     text-align: center;
     width: 350px;
     font-size: 2rem;
-    background-color: rgba(250, 235, 215, 0) ;
+    background-color: rgba(250, 235, 215, 0);
     border: 0;
 }
-.list{
+
+.list {
     display: flex;
     justify-content: space-between;
-font-size: 2rem;
+    font-size: 2rem;
 }
+
 .hideDelete {
-display: none;
+    display: none;
 }
+
 .showDelete {
-    background-color: rgba(250, 235, 215, 0) ;
+    background-color: rgba(250, 235, 215, 0);
     border: 0;
-display: block;
+    display: block;
 }
-.itemsLeft{
+
+.itemsLeft {
     margin: 10px auto;
     text-align: center;
-    vertical-align:baseline;
+    vertical-align: baseline;
     width: 350px;
     font-size: 2rem;
 
-   
+
+}
+
+.resetUser {
+    font-size: 1.5rem;
+    margin-left: 270px;
+    
 }

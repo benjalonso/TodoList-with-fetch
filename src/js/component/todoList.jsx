@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import swal from "sweetalert";
+import { MdChangeCircle } from "react-icons/md";
 
 const Todo = () => {
   const API_URL = "https://assets.breatheco.de/apis/fake/todos/user/";
@@ -35,16 +36,19 @@ const Todo = () => {
       swal("Heeeey!", "Always you can do something new!");
     }
   };
+
   const deleteTodo = (index) => {
     todos.splice(index, 1);
     setTodos([...todos]);
   };
 
-  useEffect(() => {
-  	getTodos();
+  useEffect( () => {
+      if( user !== ""){
+        getFetch()
+      }
   }, [todo]);
 
-  const getTodos = async () => {
+  const getFetch = async () => {
   	const response = await fetch(API_URL+user, {
   		method: "GET",
   		headers: {
@@ -105,6 +109,28 @@ const Todo = () => {
         console.log(error);
       });
   };
+
+  const deleteFetch = () => {
+    fetch(API_URL+user, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Usuario eliminado");
+
+        swal("User deleted!", "Now other jedi can work!");
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
   return (
     <div>
       <div className=" titlePaper container  bg-warning">
@@ -121,6 +147,8 @@ const Todo = () => {
           value={inputUserValue}
         
         ></input>
+        <MdChangeCircle className="resetUser"
+         onClick={() => deleteFetch()}/>
         <input
           className="todoInput"
           placeholder="What has to be done today?"
@@ -133,6 +161,7 @@ const Todo = () => {
 
         <ul className="todoList">
           {todos.map((todo, index) => {
+            
             return (
               <li onMouseOver={hideXButton} className="list" key={index}>
                 {todo.label}
