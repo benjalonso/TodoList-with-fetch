@@ -5,6 +5,7 @@ body {
     background-image: url("https://cdn.pixabay.com/photo/2012/12/24/08/39/backdrop-72250_960_720.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    min-height: max-content;
 
 }
 
@@ -33,6 +34,14 @@ body {
 
 
 }
+.userInput{
+    margin-left: 10px;
+    text-align: center;
+    width: 130px;
+    font-size: 1.5rem;
+    background-color: rgba(250, 235, 215, 0) ;
+    border: 0;
+}
 .todoInput{
     margin: 10px auto;
     text-align: center;
@@ -53,4 +62,13 @@ display: none;
     background-color: rgba(250, 235, 215, 0) ;
     border: 0;
 display: block;
+}
+.itemsLeft{
+    margin: 10px auto;
+    text-align: center;
+    vertical-align:baseline;
+    width: 350px;
+    font-size: 2rem;
+
+   
 }

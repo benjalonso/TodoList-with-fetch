@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import swal from "sweetalert";
 
 const Todo = () => {
@@ -6,7 +6,9 @@ const Todo = () => {
   const [inputUserValue, setInputUserValue] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [user, setUser] = useState("");
-  const [todo, setTodo] = useState([{ label: "" }]);
+  const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState([]);
+  const toDoNameRef = useRef();
   const [deleteButton, setDeleteButton] = useState("hideDelete");
 
   const hideXButton = () => {
@@ -19,25 +21,45 @@ const Todo = () => {
   };
   const validateInput = (e) => {
     if (inputValue !== "" && e.keyCode === 13) {
-      setTodo([...todo, inputValue]);
-      console.log(todo)
-      updateFetch(API_URL+user, todo)
+      setTodos([...todos, inputValue]);
+      setTodo([...todos, inputValue]);
+      const task = {
+				label: toDoNameRef.current.value,
+				done: false,
+			};
+      updateFetch(API_URL+user, [...todos, task]);
       setInputValue("");
+      toDoNameRef.current.value = "";
       swal("You can do it!", "Task has been added", "success");
     } else if (inputValue === "" && e.keyCode === 13) {
       swal("Heeeey!", "Always you can do something new!");
     }
   };
   const deleteTodo = (index) => {
-    todo.splice(index, 1);
-    setTodo([...todo]);
+    todos.splice(index, 1);
+    setTodos([...todos]);
+  };
+
+  useEffect(() => {
+  	getTodos();
+  }, [todo]);
+
+  const getTodos = async () => {
+  	const response = await fetch(API_URL+user, {
+  		method: "GET",
+  		headers: {
+  			"Content-Type": "application/json",
+  		},
+  	});
+  	const data = await response.json();
+  	setTodos(data);
   };
 
   const createUser = (e) => {
     if (inputUserValue !== "" && e.keyCode === 13) {
       setUser(inputUserValue);
-      const fullURL = API_URL+inputUserValue;
-      console.log(fullURL)
+      const fullURL = API_URL + inputUserValue;
+      console.log(fullURL);
       createUserFetch(fullURL);
       setInputUserValue("");
       swal("User created", "Lets do it!", "success");
@@ -45,14 +67,13 @@ const Todo = () => {
       swal("Heeeey!", "PUT YOU NAME!");
     }
   };
-
   const createUserFetch = (url) => {
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify([])
+      body: JSON.stringify([]),
     })
       .then((response) => {
         return response.json();
@@ -71,9 +92,7 @@ const Todo = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify([
-        {label: todo , done: false}
-      ])
+      body: JSON.stringify(todo),
     })
       .then((response) => {
         return response.json();
@@ -92,12 +111,15 @@ const Todo = () => {
         <h1 className="title">Todo's List</h1>
       </div>
       <div className="container cajaTodo">
+
         <input
+        className="userInput"
           placeholder="Put your name"
           type="text"
           onChange={(e) => setInputUserValue(e.target.value)}
           onKeyUp={createUser}
           value={inputUserValue}
+        
         ></input>
         <input
           className="todoInput"
@@ -106,15 +128,14 @@ const Todo = () => {
           onChange={(e) => setInputValue(e.target.value)}
           onKeyUp={validateInput}
           value={inputValue}
+          ref={toDoNameRef}
         />
 
         <ul className="todoList">
-          {todo.map((value, index) => {
-            console.log(value)
+          {todos.map((todo, index) => {
             return (
               <li onMouseOver={hideXButton} className="list" key={index}>
-                {[value.label]}
-                
+                {todo.label}
                 <button
                   onClick={() => {
                     deleteTodo(index);
@@ -127,6 +148,7 @@ const Todo = () => {
             );
           })}
         </ul>
+        <div className="itemsLeft">{todos.length} Todo's left</div>
       </div>
     </div>
   );
