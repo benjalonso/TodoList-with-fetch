@@ -5,6 +5,7 @@ import { MdChangeCircle } from "react-icons/md";
 const Todo = () => {
   const API_URL = "https://assets.breatheco.de/apis/fake/todos/user/";
   const [inputUserValue, setInputUserValue] = useState("");
+  const [inputDisabled, setInputDisebled] = useState("hola")
   const [inputValue, setInputValue] = useState("");
   const [user, setUser] = useState("");
   const [todo, setTodo] = useState("");
@@ -28,7 +29,9 @@ const Todo = () => {
 				label: toDoNameRef.current.value,
 				done: false,
 			};
-      updateFetch(API_URL+user, [...todos, task]);
+      if (user !== ""){
+        updateFetch(API_URL+user, [...todos, task]);
+      }
       setInputValue("");
       toDoNameRef.current.value = "";
       swal("You can do it!", "Task has been added", "success");
@@ -124,7 +127,7 @@ const Todo = () => {
         console.log("Usuario eliminado");
 
         swal("User deleted!", "Now other jedi can work!");
-
+        
       })
       .catch((error) => {
         console.log(error);
@@ -157,6 +160,7 @@ const Todo = () => {
           onKeyUp={validateInput}
           value={inputValue}
           ref={toDoNameRef}
+         
         />
 
         <ul className="todoList">

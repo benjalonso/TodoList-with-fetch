@@ -53,6 +53,14 @@ body {
     background-color: rgba(250, 235, 215, 0);
     border: 0;
 }
+.todooInput:disabled {
+    margin: 10px auto;
+    text-align: center;
+    width: 350px;
+    font-size: 2rem;
+    background-color: rgba(250, 235, 215, 0);
+    border: 0;
+}
 
 .list {
     display: flex;
